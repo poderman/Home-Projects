@@ -76,9 +76,21 @@
       opacity: 0.7;
     }
     audio {
+      display: none; /* Hide the audio controls for true background music */
+    }
+    #unmute-button {
       margin-top: 1rem;
-      width: 100%;
-      max-width: 300px;
+      padding: 0.5rem 1rem;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+    #unmute-button:hover {
+      background: rgba(255, 255, 255, 0.3);
     }
 
     /* Media queries for optimization */
@@ -156,16 +168,19 @@
       Time to go home!
     </div>
 
-    <!-- Background Music with controls -->
-    <audio id="bg-music" controls autoplay loop preload="auto">
-      <source src="background.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
+    <!-- Unmute Button -->
+    <button id="unmute-button">Unmute Music</button>
 
     <footer>
       Timezone: Eastern Standard Time (EST)
     </footer>
   </div>
+
+  <!-- Background Music (hidden, muted for autoplay) -->
+  <audio id="bg-music" autoplay loop preload="auto" muted>
+    <source src="background.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
 
   <script>
     // Set the target date: December 13, 2025 at 6:30 PM EST
@@ -203,12 +218,20 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    // Attempt to autoplay music, with fallback to user interaction
+    // Autoplay handling and unmute button
     document.addEventListener('DOMContentLoaded', () => {
       const audio = document.getElementById('bg-music');
+      const unmuteButton = document.getElementById('unmute-button');
+
+      // Attempt to play muted audio
       audio.play().catch(error => {
         console.log('Autoplay prevented:', error);
-        // Music will play when user interacts with the page
+      });
+
+      // Unmute on button click
+      unmuteButton.addEventListener('click', () => {
+        audio.muted = false;
+        unmuteButton.style.display = 'none'; // Hide button after unmute
       });
     });
   </script>
