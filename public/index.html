@@ -15,8 +15,9 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
             overflow: hidden;
+            position: relative;
         }
         .stars {
             position: absolute;
@@ -26,6 +27,7 @@
             height: 100%;
             background: transparent;
             animation: animateStars 50s linear infinite;
+            z-index: 1;
         }
         .stars::before {
             content: '';
@@ -41,6 +43,13 @@
             0% { background-position: 0 0; }
             100% { background-position: -2000px -2000px; }
         }
+        .content {
+            z-index: 2;
+            text-align: center;
+            padding: 20px;
+            max-width: 1200px;
+            width: 100%;
+        }
         h1 {
             font-size: 3em;
             margin-bottom: 20px;
@@ -53,53 +62,115 @@
         }
         .app-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            max-width: 800px;
-            width: 100%;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 20px;
         }
-        .app-button {
+        .app-card {
             background: rgba(255, 255, 255, 0.1);
             border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
+            border-radius: 15px;
             padding: 20px;
             text-align: center;
             text-decoration: none;
             color: white;
-            font-size: 1.2em;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .app-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .app-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+            animation: bounce 1s infinite alternate;
+        }
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-5px); }
+        }
+        .app-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        .app-desc {
+            font-size: 1em;
+            opacity: 0.8;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .app-card:hover .app-desc {
+            max-height: 100px;
+        }
+        .app-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: background 0.3s;
         }
         .app-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            background: linear-gradient(135deg, #764ba2, #667eea);
         }
-        .app-button span {
-            display: block;
-            font-size: 0.8em;
-            margin-top: 10px;
-            opacity: 0.8;
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+            .app-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .app-card {
+                padding: 15px;
+            }
+            .app-icon {
+                font-size: 2.5em;
+            }
+            .app-title {
+                font-size: 1.2em;
+            }
+            .app-desc {
+                font-size: 0.9em;
+            }
         }
     </style>
 </head>
 <body>
     <div class="stars"></div>
-    <h1>Welcome to My Web Apps</h1>
-    <div class="app-grid">
-        <a href="https://poderman.github.io/Home-Projects/public/Going-home/" class="app-button">
-            Going Home
-            <span>Your first web app adventure</span>
-        </a>
-        <!-- Add more app buttons here, e.g.:
-        <a href="https://example.com/app2" class="app-button">
-            App Name 2
-            <span>Description of app 2</span>
-        </a>
-        <a href="https://example.com/app3" class="app-button">
-            App Name 3
-            <span>Description of app 3</span>
-        </a>
-        -->
+    <div class="content">
+        <h1>Welcome to My Web Apps</h1>
+        <div class="app-grid">
+            <div class="app-card" onclick="window.location.href='https://poderman.github.io/Home-Projects/public/Going-home/'">
+                <div class="app-icon">🚀</div>
+                <div class="app-title">Going Home</div>
+                <div class="app-desc">Embark on an exciting journey back home with this interactive web app. Explore features and have fun!</div>
+                <a href="https://poderman.github.io/Home-Projects/public/Going-home/" class="app-button">Launch App</a>
+            </div>
+            <!-- Add more app cards here, e.g.:
+            <div class="app-card" onclick="window.location.href='https://example.com/app2'">
+                <div class="app-icon">🌟</div>
+                <div class="app-title">App Name 2</div>
+                <div class="app-desc">Description of app 2 that appears on hover.</div>
+                <a href="https://example.com/app2" class="app-button">Launch App</a>
+            </div>
+            <div class="app-card" onclick="window.location.href='https://example.com/app3'">
+                <div class="app-icon">⚡</div>
+                <div class="app-title">App Name 3</div>
+                <div class="app-desc">Description of app 3 that appears on hover.</div>
+                <a href="https://example.com/app3" class="app-button">Launch App</a>
+            </div>
+            -->
+        </div>
     </div>
 </body>
 </html>
